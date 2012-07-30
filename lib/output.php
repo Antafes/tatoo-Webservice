@@ -25,3 +25,28 @@ class gameOutputHandler
 		return query($sql, true);
 	}
 }
+
+class codexOutputHandler
+{
+	function getList($getAll)
+	{
+		$sql = '
+			SELECT
+				name,
+				version,
+				edition,
+				internal_id AS codexID,
+				creator
+			FROM codices AS o
+		';
+
+		if (!$getAll)
+			$sql .= 'WHERE version = (
+				SELECT MAX(i.version)
+				FROM codices AS i
+				WHERE i.codex_id = o.codex_id
+			)';
+
+		return query($sql, true);
+	}
+}

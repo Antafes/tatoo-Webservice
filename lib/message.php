@@ -59,4 +59,37 @@ class message
 
 		return $xml->outputMemory();
 	}
+
+	static function createCodexListResponse($messageID, $codexList)
+	{
+		$xml = new XMLWriter();
+		$xml->openMemory();
+		$xml->setIndentString("\t");
+		$xml->setIndent(true);
+
+		$xml->startDocument('1.0', 'UTF-8');
+
+		$xml->startElement('message');
+		$xml->writeElement('type', 'codexListResponse');
+		$xml->writeElement('messageID', $messageID);
+		$xml->startElement('codices');
+
+		foreach ($codexList as $codex)
+		{
+			$xml->startElement('codex');
+			$xml->writeElement('name', $codex['name']);
+			$xml->writeElement('version', $codex['version']);
+			$xml->writeElement('edition', $codex['edition']);
+			$xml->writeElement('codexID', $codex['codexID']);
+			$xml->writeElement('creator', $codex['creator']);
+			$xml->endElement(); // end of codex
+		}
+
+		$xml->endElement(); // end of codices
+		$xml->endElement(); // end of message
+
+		$xml->endDocument();
+
+		return $xml->outputMemory();
+	}
 }
