@@ -22,6 +22,13 @@ if ($result == 'ok')
 			else
 				echo message::createResponse($xml->getMessageID(), 'alreadyExisting');
 			break;
+		case 'codexUpload':
+			$codexHandler = new codexInputHandler();
+			if ($codexHandler->import($xml->getData()))
+				echo message::createResponse($xml->getMessageID());
+			else
+				echo message::createResponse($xml->getMessageID(), 'alreadyExisting');
+			break;
 	}
 }
 else

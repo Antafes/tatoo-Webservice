@@ -74,3 +74,82 @@ class gameInputHandler
 		return $this->data;
 	}
 }
+
+class codexInputHandler
+{
+	private $data;
+
+	private function checkExisting()
+	{
+		$sql = '
+			SELECT * FROM codices
+			WHERE internal_id = '.sqlval($this->data['gameID']).'
+				AND version = '.sqlval($this->data['version']).'
+		';
+		$data = query($sql);
+
+		if ($data)
+			return true;
+		else
+			return false;
+	}
+
+	public function import($data)
+	{
+		$this->data = $data;
+
+		if (!$this->checkExisting())
+		{
+			$sql = '
+				INSERT INTO codices
+				SET game_id = (
+						SELECT game_id FROM games
+						WHERE internal_id = '.sqlval($this->data['gameID']).'
+							AND version = '.sqlval($this->data['gameVersion']).'
+					),
+					name = '.sqlval($this->data['name']).',
+					version = '.sqlval($this->data['version']).',
+					edition = '.sqlval($this->data['edition']).',
+					internal_id = '.sqlval($this->data['gameID']).',
+					creator = '.sqlval($this->data['creator']).',
+					create_datetime = '.sqlval($this->data['createDateTime']->format('Y-m-d H:i:s')).',
+					xml = '.sqlval($this->data['codexXML']).'
+			';
+			query($sql);
+
+			return true;
+		}
+		else
+			return false;
+	}
+
+	public function loadData($codexID, $version = 'latest')
+	{
+		$sql = '
+			SELECT * FROM codices
+			WHERE internal_id = '.sqlval($codexID).'
+		';
+
+		if ($version != 'latest')
+			$sql .= 'AND version = '.sqlval($this->data['version']).'';
+		else
+			$sql .= 'AND version = (SELECT MAX(version) FROM codices WHERE internal_id = '.sqlval ($codexID).')';
+
+		$data = query($sql);
+
+		$this->data = array(
+			'name' => $data['name'],
+			'version' => $data['verion'],
+			'edition' => $data['edition'],
+			'codexID' => $data['internal_id'],
+			'creator' => $data['creator'],
+			'createDateTime' => DateTime::createFromFormat('Y-m-d H:i:s', $data['create_datetime']),
+			'codexXML' => $data['xml'],
+		);
+	}
+
+	public function getData()
+	{
+		return $this->data;
+	}
+}

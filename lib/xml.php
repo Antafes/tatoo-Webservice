@@ -47,6 +47,29 @@ class xml
 						return 'validationFailed';
 
 					break;
+				case 'codexUpload':
+					$validator = new XMLReader();
+					$validator->XML($xmlString, 'UTF_8');
+
+					if ($validator->setSchema($this->xsdPath.'/codex_upload.xsd'))
+					{
+						$this->data = array(
+							'name' => $simplexml->name,
+							'version' => $simplexml->version,
+							'edition' => $simplexml->edition,
+							'codexID' => $simplexml->codexID,
+							'gameID' => $simplexml->gameID,
+							'gameVersion' => $simplexml->gameVersion,
+							'creator' => $simplexml->creator,
+							'createDateTime' => DateTime::createFromFormat('Y-m-d\TH:i:s', $simplexml->createDateTime),
+							'codexXML' => $simplexml->codexXML,
+						);
+						return 'ok';
+					}
+					else
+						return 'validationFailed';
+
+					break;
 				default:
 					return 'noValidType';
 					break;
