@@ -112,4 +112,24 @@ class message
 
 		return $xml->outputMemory();
 	}
+
+	static function createCodexResponse($messageID, $codexXML)
+	{
+		$xml = new XMLWriter();
+		$xml->openMemory();
+		$xml->setIndentString("\t");
+		$xml->setIndent(true);
+
+		$xml->startDocument('1.0', 'UTF-8');
+
+		$xml->startElement('message');
+		$xml->writeElement('type', 'gameResponse');
+		$xml->writeElement('messageID', $messageID);
+		$xml->writeElement('codexXML', htmlentities($codexXML));
+		$xml->endElement(); // end of message
+
+		$xml->endDocument();
+
+		return $xml->outputMemory();
+	}
 }

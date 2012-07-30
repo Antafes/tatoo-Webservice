@@ -85,7 +85,7 @@ class codexInputHandler
 					name = '.sqlval($this->data['name']).',
 					version = '.sqlval($this->data['version']).',
 					edition = '.sqlval($this->data['edition']).',
-					internal_id = '.sqlval($this->data['gameID']).',
+					internal_id = '.sqlval($this->data['codexID']).',
 					creator = '.sqlval($this->data['creator']).',
 					create_datetime = '.sqlval($this->data['createDateTime']->format('Y-m-d H:i:s')).',
 					xml = '.sqlval($this->data['codexXML']).'

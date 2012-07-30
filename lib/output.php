@@ -19,7 +19,7 @@ class gameOutputHandler
 			$sql .= 'WHERE version = (
 				SELECT MAX(i.version)
 				FROM games AS i
-				WHERE i.game_id = o.game_id
+				WHERE i.internal_id = o.internal_id
 			)';
 
 		return query($sql, true);
@@ -37,9 +37,7 @@ class gameOutputHandler
 		else
 			$sql .= 'AND version = (SELECT MAX(version) FROM games WHERE internal_id = '.sqlval ($gameID).')';
 
-		$data = query($sql);
-
-		return $data;
+		return query($sql);
 	}
 }
 
@@ -61,9 +59,24 @@ class codexOutputHandler
 			$sql .= 'WHERE version = (
 				SELECT MAX(i.version)
 				FROM codices AS i
-				WHERE i.codex_id = o.codex_id
+				WHERE i.internal_id = o.internal_id
 			)';
 
 		return query($sql, true);
+	}
+
+	public function loadData($codexID, $version = 'latest')
+	{
+		$sql = '
+			SELECT xml FROM codices
+			WHERE internal_id = '.sqlval($codexID).'
+		';
+
+		if ($version != 'latest')
+			$sql .= 'AND version = '.sqlval($version).'';
+		else
+			$sql .= 'AND version = (SELECT MAX(version) FROM codices WHERE internal_id = '.sqlval ($codexID).')';
+
+		return query($sql);
 	}
 }
