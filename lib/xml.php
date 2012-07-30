@@ -94,6 +94,19 @@ class xml
 						return 'ok';
 					}
 					break;
+				case 'getGame':
+					$validator = new XMLReader();
+					$validator->XML($xmlString, 'UTF_8');
+
+					if ($validator->setSchema($this->xsdPath.'/get_game.xsd'))
+					{
+						$this->data = array(
+							'gameID' => $simplexml->gameID,
+							'version' => $simplexml->version,
+						);
+						return 'ok';
+					}
+					break;
 				default:
 					return 'noValidType';
 					break;

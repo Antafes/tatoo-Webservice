@@ -24,6 +24,23 @@ class gameOutputHandler
 
 		return query($sql, true);
 	}
+
+	public function loadData($gameID, $version = 'latest')
+	{
+		$sql = '
+			SELECT xml FROM games
+			WHERE internal_id = '.sqlval($gameID).'
+		';
+
+		if ($version != 'latest')
+			$sql .= 'AND version = '.sqlval($version).'';
+		else
+			$sql .= 'AND version = (SELECT MAX(version) FROM games WHERE internal_id = '.sqlval ($gameID).')';
+
+		$data = query($sql);
+
+		return $data;
+	}
 }
 
 class codexOutputHandler

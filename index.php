@@ -39,6 +39,16 @@ if ($result == 'ok')
 			$data = $xml->getData();
 			echo message::createCodexListResponse($xml->getMessageID(), $codexHandler->getList($data['versions'] == 'getAll'));
 			break;
+		case 'getGame':
+			$gameHandler = new gameOutputHandler();
+			$data = $xml->getData();
+
+			if ($data['version'])
+				echo message::createGameResponse($xml->getMessageID(), $gameHandler->loadData($data['gameID'], $data['version']));
+			else
+				echo message::createGameResponse($xml->getMessageID(), $gameHandler->loadData($data['gameID']));
+
+			break;
 	}
 }
 else
