@@ -70,6 +70,18 @@ class xml
 						return 'validationFailed';
 
 					break;
+				case 'getGameList':
+					$validator = new XMLReader();
+					$validator->XML($xmlString, 'UTF_8');
+
+					if ($validator->setSchema($this->xsdPath.'/get_game_list.xsd'))
+					{
+						$this->data = array(
+							'versions' => $simplexml->versions,
+						);
+						return 'ok';
+					}
+					break;
 				default:
 					return 'noValidType';
 					break;

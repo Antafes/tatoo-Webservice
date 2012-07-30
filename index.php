@@ -29,6 +29,11 @@ if ($result == 'ok')
 			else
 				echo message::createResponse($xml->getMessageID(), 'alreadyExisting');
 			break;
+		case 'getGameList':
+			$gameHandler = new gameOutputHandler();
+			$data = $xml->getData();
+			echo message::createGameListResponse($xml->getMessageID(), $gameHandler->getList($data['versions'] == 'getAll'));
+			break;
 	}
 }
 else
