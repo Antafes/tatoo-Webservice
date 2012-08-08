@@ -10,7 +10,7 @@ require_once(dirname(__FILE__).'/lib/output.php');
 require_once(dirname(__FILE__).'/lib/message.php');
 
 $xml = new xml(dirname(__FILE__).'/schema/');
-$result = $xml->parseXML($_POST['message']);
+$result = $xml->parseXML(urldecode($_POST['message']));
 
 if ($result == 'ok')
 {
