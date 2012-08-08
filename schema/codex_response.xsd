@@ -5,7 +5,7 @@
 			<xs:sequence>
 				<xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1" />
 				<xs:element name="messageID" type="xs:string" minOccurs="1" maxOccurs="1" />
-				<xs:element name="codexXML" type="xs:string" minOccurs="1" maxOccurs="1" />
+				<xs:element name="xml" type="xs:string" minOccurs="1" maxOccurs="1" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

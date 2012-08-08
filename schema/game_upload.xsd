@@ -11,7 +11,7 @@
 				<xs:element name="gameID" type="xs:string" minOccurs="1" maxOccurs="1" />
 				<xs:element name="creator" type="xs:string" minOccurs="1" maxOccurs="1" />
 				<xs:element name="createDateTime" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
-				<xs:element name="gameXML" type="xs:string" minOccurs="1" maxOccurs="1" />
+				<xs:element name="xml" type="xs:string" minOccurs="1" maxOccurs="1" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
