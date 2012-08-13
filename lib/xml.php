@@ -39,7 +39,7 @@ class xml
 							'gameID' => $simplexml->gameID,
 							'creator' => $simplexml->creator,
 							'createDateTime' => DateTime::createFromFormat('Y-m-d\TH:i:s', $simplexml->createDateTime),
-							'gameXML' => $simplexml->gameXML,
+							'xml' => $simplexml->xml,
 						);
 						return 'ok';
 					}
@@ -62,7 +62,7 @@ class xml
 							'gameVersion' => $simplexml->gameVersion,
 							'creator' => $simplexml->creator,
 							'createDateTime' => DateTime::createFromFormat('Y-m-d\TH:i:s', $simplexml->createDateTime),
-							'codexXML' => $simplexml->codexXML,
+							'xml' => $simplexml->xml,
 						);
 						return 'ok';
 					}

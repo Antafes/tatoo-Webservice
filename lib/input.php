@@ -34,7 +34,7 @@ class gameInputHandler
 					internal_id = '.sqlval($this->data['gameID']).',
 					creator = '.sqlval($this->data['creator']).',
 					create_datetime = '.sqlval($this->data['createDateTime']->format('Y-m-d H:i:s')).',
-					xml = '.sqlval($this->data['gameXML']).'
+					xml = '.sqlval($this->data['xml']).'
 			';
 			query($sql);
 
@@ -88,7 +88,7 @@ class codexInputHandler
 					internal_id = '.sqlval($this->data['codexID']).',
 					creator = '.sqlval($this->data['creator']).',
 					create_datetime = '.sqlval($this->data['createDateTime']->format('Y-m-d H:i:s')).',
-					xml = '.sqlval($this->data['codexXML']).'
+					xml = '.sqlval($this->data['xml']).'
 			';
 			query($sql);
 

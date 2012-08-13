@@ -93,7 +93,7 @@ class message
 		return $xml->outputMemory();
 	}
 
-	static function createGameResponse($messageID, $gameXML)
+	static function createGameResponse($messageID, $xml)
 	{
 		$xml = new XMLWriter();
 		$xml->openMemory();
@@ -105,7 +105,7 @@ class message
 		$xml->startElement('message');
 		$xml->writeElement('type', 'gameResponse');
 		$xml->writeElement('messageID', $messageID);
-		$xml->writeElement('gameXML', htmlentities($gameXML));
+		$xml->writeElement('xml', htmlentities($xml));
 		$xml->endElement(); // end of message
 
 		$xml->endDocument();
@@ -113,7 +113,7 @@ class message
 		return $xml->outputMemory();
 	}
 
-	static function createCodexResponse($messageID, $codexXML)
+	static function createCodexResponse($messageID, $xml)
 	{
 		$xml = new XMLWriter();
 		$xml->openMemory();
@@ -125,7 +125,7 @@ class message
 		$xml->startElement('message');
 		$xml->writeElement('type', 'gameResponse');
 		$xml->writeElement('messageID', $messageID);
-		$xml->writeElement('codexXML', htmlentities($codexXML));
+		$xml->writeElement('xml', htmlentities($xml));
 		$xml->endElement(); // end of message
 
 		$xml->endDocument();
