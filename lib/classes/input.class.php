@@ -1,10 +1,25 @@
 <?php
-require_once(dirname(__FILE__).'/mysql.php');
+require_once(dirname(__FILE__).'/../mysql.php');
 
+/**
+ * handles all input for games
+ *
+ * @author Neithan
+ */
 class gameInputHandler
 {
+	/**
+	 * contains the game data
+	 * @var array
+	 */
 	private $data;
 
+	/**
+	 * check whether the game exists or not
+	 *
+	 * @author Neithan
+	 * @return boolean
+	 */
 	private function checkExisting()
 	{
 		$sql = '
@@ -20,6 +35,13 @@ class gameInputHandler
 			return false;
 	}
 
+	/**
+	 * import a new game
+	 *
+	 * @author Neithan
+	 * @param array $data
+	 * @return boolean
+	 */
 	public function import($data)
 	{
 		$this->data = $data;
@@ -44,22 +66,49 @@ class gameInputHandler
 			return false;
 	}
 
+	/**
+	 * get the game data
+	 *
+	 * @author Neithan
+	 * @return array
+	 */
 	public function getData()
 	{
 		return $this->data;
 	}
 }
 
+/**
+ * handles all input for codexes
+ *
+ * @author Neithan
+ */
 class codexInputHandler
 {
+	/**
+	 * contains the codex data
+	 * @var array
+	 */
 	private $data;
 
+	/**
+	 * check whether the codex exists or not
+	 *
+	 * @author Neithan
+	 * @return boolean
+	 */
 	private function checkExisting()
 	{
 		$sql = '
-			SELECT * FROM codices
-			WHERE internal_id = '.sqlval($this->data['gameID']).'
-				AND version = '.sqlval($this->data['version']).'
+			SELECT c.*
+			FROM codices AS c
+			JOIN games AS g USING (game_id)
+			WHERE c.internal_id = '.sqlval($this->data['codexID']).'
+				AND c.version = '.sqlval($this->data['version']).'
+				AND c.edition = '.sqlval($this->data['edition']).'
+				AND g.internal_id = '.sqlval($this->data['gameID']).'
+				AND g.version = '.sqlval($this->data['gameVersion']).'
+				AND g.edition = '.sqlval($this->data['gameEdition']).'
 		';
 		$data = query($sql);
 
@@ -69,6 +118,13 @@ class codexInputHandler
 			return false;
 	}
 
+	/**
+	 * import a new codex
+	 *
+	 * @author Neithan
+	 * @param array $data
+	 * @return boolean
+	 */
 	public function import($data)
 	{
 		$this->data = $data;
@@ -98,6 +154,12 @@ class codexInputHandler
 			return false;
 	}
 
+	/**
+	 * get the codex data
+	 *
+	 * @author Neithan
+	 * @return array
+	 */
 	public function getData()
 	{
 		return $this->data;
