@@ -161,7 +161,7 @@ function connect()
 		else
 		{
 			$mysql->set_charset($GLOBALS['db']['charset']);
-			$mysql->select_db($GLOBALS['db']['db']);
+			$mysql->select_db($GLOBALS['db']['database']);
 		}
 	}
 
