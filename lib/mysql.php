@@ -141,12 +141,11 @@ function sqlval($value, $wrap = true)
  * Should only be used in sqlval() and query()
  * @author Neithan
  * @global array $lang
- * @staticvar \mysqli $mysql
- * @return \mysqli
+ * @staticvar mysqli $mysql
+ * @return mysqli
  */
 function connect()
 {
-	global $lang;
 	static $mysql;
 
 	if (!is_object($mysql))
@@ -155,8 +154,10 @@ function connect()
 
 		if ($mysql->connect_error)
 		{
-			echo 'booooooooooom<br /><a href=\"mailto:admin@wafriv.de\">admin@wafriv.de</a>';
-			exit;
+			if ($GLOBALS['debug'])
+				throw new SoapFault('mysql', $mysql->connect_error);
+			else
+				throw new SoapFault('mysql', 'could not connect to database');
 		}
 		else
 		{
