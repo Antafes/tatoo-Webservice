@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions name="TatooWebservice" xmlns:tns="{$baseUrl}/wsdl.php" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<definitions name="TatooWebserviceDefinition" targetNamespace="{$baseUrl}/wsdl.php"
+			 xmlns:tns="{$baseUrl}/wsdl.php"
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+			 xmlns:x1="{$baseUrl}/wsdl.php/types/"
+			 xmlns="http://schemas.xmlsoap.org/wsdl/">
 	<types>
-		<xsd:schema>
+		<xsd:schema targetNamespace="{$baseUrl}/wsdl.php/types/">
 			<xsd:complexType name="gameList">
-				<xsd:all>
-					<xsd:element name="game" type="tns:game" />
-				</xsd:all>
+				<xsd:sequence>
+					<xsd:element name="game" type="game" minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
 			</xsd:complexType>
 			<xsd:complexType name="game">
 				<xsd:sequence>
@@ -17,9 +22,9 @@
 				</xsd:sequence>
 			</xsd:complexType>
 			<xsd:complexType name="codexList">
-				<xsd:all>
-					<xsd:element name="codex" type="tns:codex" />
-				</xsd:all>
+				<xsd:sequence>
+					<xsd:element name="codex" type="codex" minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
 			</xsd:complexType>
 			<xsd:complexType name="codex">
 				<xsd:sequence>
@@ -60,151 +65,146 @@
 		<part name="response" type="xsd:string" />
 	</message>
 	<message name="getGameListRequest">
-		<part name="versions" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		<part name="versions" type="xsd:boolean" />
 	</message>
 	<message name="getGameListResponse">
-		<part name="gameList" type="tns:gameList" />
+		<part name="gameList" type="x1:gameList" />
 	</message>
 	<message name="getCodexListRequest">
 		<part name="gameID" type="xsd:string" />
 		<part name="gameVersion" type="xsd:integer" />
 		<part name="gameEdition" type="xsd:integer" />
-		<part name="versions" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		<part name="versions" type="xsd:boolean" />
 	</message>
 	<message name="getCodexListResponse">
-		<part name="codexList" type="tns:codexList" />
+		<part name="codexList" type="x1:codexList" />
 	</message>
 	<message name="getGameRequest">
 		<part name="gameID" type="xsd:string" />
-		<part name="version" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-		<part name="edition" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+		<part name="version" type="xsd:integer" />
+		<part name="edition" type="xsd:integer" />
 	</message>
 	<message name="getGameResponse">
 		<part name="gameData" type="xsd:string" />
 	</message>
 	<message name="getCodexRequest">
 		<part name="codexID" type="xsd:string" />
-		<part name="version" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-		<part name="edition" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+		<part name="version" type="xsd:integer" />
+		<part name="edition" type="xsd:integer" />
 	</message>
 	<message name="getCodexResponse">
 		<part name="codexData" type="xsd:string" />
 	</message>
 	<portType name="TatooWebservicePortType">
 		<operation name="gameUpload">
-			<input message="gameUploadRequest" />
-			<output message="gameUploadResponse" />
+			<input message="tns:gameUploadRequest" />
+			<output message="tns:gameUploadResponse" />
 		</operation>
 		<operation name="codexUpload">
-			<input message="codexUploadRequest" />
-			<output message="codexUploadResponse" />
+			<input message="tns:codexUploadRequest" />
+			<output message="tns:codexUploadResponse" />
 		</operation>
 		<operation name="getGameList">
-			<input message="getGameListRequest" />
-			<output message="getGameListResponse" />
+			<input message="tns:getGameListRequest" />
+			<output message="tns:getGameListResponse" />
 		</operation>
 		<operation name="getCodexList">
-			<input message="getCodexListRequest" />
-			<output message="getCodexListResponse" />
+			<input message="tns:getCodexListRequest" />
+			<output message="tns:getCodexListResponse" />
 		</operation>
 		<operation name="getGame">
-			<input message="getGameRequest" />
-			<output message="getGameResponse" />
+			<input message="tns:getGameRequest" />
+			<output message="tns:getGameResponse" />
 		</operation>
 		<operation name="getCodex">
-			<input message="getCodexRequest" />
-			<output message="getCodexResponse" />
+			<input message="tns:getCodexRequest" />
+			<output message="tns:getCodexResponse" />
 		</operation>
 	</portType>
 	<binding name="TatooWebserviceBinding" type="tns:TatooWebservicePortType">
 		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
 		<operation name="gameUpload">
+			<soap:operation soapAction="urn:gameUpload" style="rpc" />
 			<input>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</input>
 			<output>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</output>
 		</operation>
 		<operation name="codexUpload">
+			<soap:operation soapAction="urn:codexUpload" style="rpc" />
 			<input>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</input>
 			<output>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</output>
 		</operation>
 		<operation name="getGameList">
+			<soap:operation soapAction="urn:getGameList" style="rpc" />
 			<input>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</input>
 			<output>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</output>
 		</operation>
 		<operation name="getCodexList">
+			<soap:operation soapAction="urn:getCodexList" style="rpc" />
 			<input>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</input>
 			<output>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</output>
 		</operation>
 		<operation name="getGame">
+			<soap:operation soapAction="urn:getGame" style="rpc" />
 			<input>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</input>
 			<output>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</output>
 		</operation>
 		<operation name="getCodex">
+			<soap:operation soapAction="urn:getCodex" style="rpc" />
 			<input>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</input>
 			<output>
 				<soap:body
-					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 					namespace="urn:xmethodsTatooWebservice"
-					use="encoded" />
+					use="literal" />
 			</output>
 		</operation>
 	</binding>
-	<service name="TatooWebserviceService">
-		<port name="TatooWebservicePort" binding="TatooWebserviceBinding">
+	<service name="TatooWebservice">
+		<documentation>WSDL for the tatoo webservice</documentation>
+		<port name="TatooWebservicePort" binding="tns:TatooWebserviceBinding">
 			<soap:address location="{$baseUrl}/index.php" />
 		</port>
 	</service>
