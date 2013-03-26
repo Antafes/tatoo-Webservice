@@ -124,7 +124,7 @@ class SOAPHandler
 	public function getGameList($versions = null)
 	{
 		$gameHandler = new gameOutputHandler();
-		$list = $gameHandler->getList($versions);
+		$list = $gameHandler->getList(!!$versions);
 
 		return $list;
 	}
@@ -142,7 +142,7 @@ class SOAPHandler
 	public function getCodexList($gameID, $gameVersion, $gameEdition, $versions = null)
 	{
 		$codexHandler = new codexOutputHandler();
-		$list = $codexHandler->getList($gameID, $gameVersion, $gameEdition, $versions);
+		$list = $codexHandler->getList($gameID, $gameVersion, $gameEdition, !!$versions);
 
 		return $list;
 	}
