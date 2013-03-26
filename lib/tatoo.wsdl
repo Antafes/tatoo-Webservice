@@ -6,7 +6,8 @@
 			 xmlns:x1="{$baseUrl}/wsdl.php/types/"
 			 xmlns="http://schemas.xmlsoap.org/wsdl/">
 	<types>
-		<xsd:schema targetNamespace="{$baseUrl}/wsdl.php/types/">
+		<xsd:schema targetNamespace="{$baseUrl}/wsdl.php/types/"
+					xmlns="{$baseUrl}/wsdl.php/types/">
 			<xsd:complexType name="gameList">
 				<xsd:sequence>
 					<xsd:element name="game" type="game" minOccurs="1" maxOccurs="unbounded" />
