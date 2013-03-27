@@ -25,6 +25,13 @@ class SOAPHandler
 		return $response;
 	}
 
+	public function getTatooVersion()
+	{
+		$configurations = new configurationOutputHandler();
+
+		return $configurations->getValue('tatooVersion');
+	}
+
 	/**
 	 * handles the game upload
 	 *

@@ -142,3 +142,27 @@ class codexOutputHandler
 		return query($sql);
 	}
 }
+
+class configurationOutputHandler
+{
+	private $configurations;
+
+	function __construct()
+	{
+		$sql = '
+			SELECT
+				`key`,
+				`value`
+			FROM configurations
+		';
+		$temp = query($sql, true);
+
+		foreach ($temp as $le)
+			$this->configurations[$le['key']] = $le['value'];
+	}
+
+	public function getValue($key)
+	{
+		return $this->configurations[$key];
+	}
+}

@@ -38,6 +38,10 @@
 			</xsd:complexType>
 		</xsd:schema>
 	</types>
+	<message name="getTatooVersionRequest" />
+	<message name="getTatooVersionResponse">
+		<part name="version" type="xsd:string" />
+	</message>
 	<message name="gameUploadRequest">
 		<part name="name" type="xsd:string" />
 		<part name="gameID" type="xsd:string" />
@@ -97,6 +101,10 @@
 		<part name="codexData" type="xsd:string" />
 	</message>
 	<portType name="TatooWebservicePortType">
+		<operation name="getTatooVersion">
+			<input message="tns:getTatooVersionRequest" />
+			<output message="tns:getTatooVersionResponse" />
+		</operation>
 		<operation name="gameUpload">
 			<input message="tns:gameUploadRequest" />
 			<output message="tns:gameUploadResponse" />
@@ -124,6 +132,19 @@
 	</portType>
 	<binding name="TatooWebserviceBinding" type="tns:TatooWebservicePortType">
 		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="getTatooVersion">
+			<soap:operation soapAction="urn:getTatooVersion" style="rpc" />
+			<input>
+				<soap:body
+					namespace="urn:xmethodsTatooWebservice"
+					use="literal" />
+			</input>
+			<output>
+				<soap:body
+					namespace="urn:xmethodsTatooWebservice"
+					use="literal" />
+			</output>
+		</operation>
 		<operation name="gameUpload">
 			<soap:operation soapAction="urn:gameUpload" style="rpc" />
 			<input>
