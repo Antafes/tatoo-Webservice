@@ -25,6 +25,12 @@ class SOAPHandler
 		return $response;
 	}
 
+	/**
+	 * get the current tatoo version
+	 *
+	 * @author Neithan
+	 * @return string
+	 */
 	public function getTatooVersion()
 	{
 		$configurations = new configurationOutputHandler();
