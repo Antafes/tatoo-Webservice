@@ -104,7 +104,10 @@ class codexOutputHandler
 			$sql .= 'AND c.version = (
 				SELECT MAX(i.version)
 				FROM codices AS i
+				JOIN games AS gi USING (game_id)
 				WHERE i.internal_id = c.internal_id
+					AND gi.version = g.version
+					AND gi.edition = g.edition
 			)';
 
 		return query($sql, true);
