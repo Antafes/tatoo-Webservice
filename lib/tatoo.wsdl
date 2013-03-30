@@ -22,17 +22,17 @@
 					<xsd:element name="creator" type="xsd:string" />
 				</xsd:sequence>
 			</xsd:complexType>
-			<xsd:complexType name="codexList">
+			<xsd:complexType name="armyList">
 				<xsd:sequence>
-					<xsd:element name="codex" type="codex" minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="army" type="army" minOccurs="1" maxOccurs="unbounded" />
 				</xsd:sequence>
 			</xsd:complexType>
-			<xsd:complexType name="codex">
+			<xsd:complexType name="army">
 				<xsd:sequence>
 					<xsd:element name="name" type="xsd:string" />
 					<xsd:element name="version" type="xsd:integer" />
 					<xsd:element name="edition" type="xsd:integer" />
-					<xsd:element name="codexID" type="xsd:string" />
+					<xsd:element name="armyID" type="xsd:string" />
 					<xsd:element name="creator" type="xsd:string" />
 				</xsd:sequence>
 			</xsd:complexType>
@@ -54,19 +54,19 @@
 	<message name="gameUploadResponse">
 		<part name="response" type="xsd:string" />
 	</message>
-	<message name="codexUploadRequest">
+	<message name="armyUploadRequest">
 		<part name="name" type="xsd:string" />
 		<part name="gameID" type="xsd:string" />
 		<part name="gameVersion" type="xsd:integer" />
 		<part name="gameEdition" type="xsd:integer" />
-		<part name="codexID" type="xsd:string" />
+		<part name="armyID" type="xsd:string" />
 		<part name="version" type="xsd:integer" />
 		<part name="edition" type="xsd:integer" />
 		<part name="creator" type="xsd:string" />
 		<part name="createDateTime" type="xsd:dateTime" />
-		<part name="codexData" type="xsd:string" />
+		<part name="armyData" type="xsd:string" />
 	</message>
-	<message name="codexUploadResponse">
+	<message name="armyUploadResponse">
 		<part name="response" type="xsd:string" />
 	</message>
 	<message name="getGameListRequest">
@@ -75,14 +75,14 @@
 	<message name="getGameListResponse">
 		<part name="gameList" type="x1:gameList" />
 	</message>
-	<message name="getCodexListRequest">
+	<message name="getArmyListRequest">
 		<part name="gameID" type="xsd:string" />
 		<part name="gameVersion" type="xsd:integer" />
 		<part name="gameEdition" type="xsd:integer" />
 		<part name="versions" type="xsd:boolean" />
 	</message>
-	<message name="getCodexListResponse">
-		<part name="codexList" type="x1:codexList" />
+	<message name="getArmyListResponse">
+		<part name="armyList" type="x1:armyList" />
 	</message>
 	<message name="getGameRequest">
 		<part name="gameID" type="xsd:string" />
@@ -92,13 +92,13 @@
 	<message name="getGameResponse">
 		<part name="gameData" type="xsd:string" />
 	</message>
-	<message name="getCodexRequest">
-		<part name="codexID" type="xsd:string" />
+	<message name="getArmyRequest">
+		<part name="armyID" type="xsd:string" />
 		<part name="version" type="xsd:integer" />
 		<part name="edition" type="xsd:integer" />
 	</message>
-	<message name="getCodexResponse">
-		<part name="codexData" type="xsd:string" />
+	<message name="getArmyResponse">
+		<part name="armyData" type="xsd:string" />
 	</message>
 	<portType name="TatooWebservicePortType">
 		<operation name="getTatooVersion">
@@ -109,25 +109,25 @@
 			<input message="tns:gameUploadRequest" />
 			<output message="tns:gameUploadResponse" />
 		</operation>
-		<operation name="codexUpload">
-			<input message="tns:codexUploadRequest" />
-			<output message="tns:codexUploadResponse" />
+		<operation name="armyUpload">
+			<input message="tns:armyUploadRequest" />
+			<output message="tns:armyUploadResponse" />
 		</operation>
 		<operation name="getGameList">
 			<input message="tns:getGameListRequest" />
 			<output message="tns:getGameListResponse" />
 		</operation>
-		<operation name="getCodexList">
-			<input message="tns:getCodexListRequest" />
-			<output message="tns:getCodexListResponse" />
+		<operation name="getArmyList">
+			<input message="tns:getArmyListRequest" />
+			<output message="tns:getArmyListResponse" />
 		</operation>
 		<operation name="getGame">
 			<input message="tns:getGameRequest" />
 			<output message="tns:getGameResponse" />
 		</operation>
-		<operation name="getCodex">
-			<input message="tns:getCodexRequest" />
-			<output message="tns:getCodexResponse" />
+		<operation name="getArmy">
+			<input message="tns:getArmyRequest" />
+			<output message="tns:getArmyResponse" />
 		</operation>
 	</portType>
 	<binding name="TatooWebserviceBinding" type="tns:TatooWebservicePortType">
@@ -158,8 +158,8 @@
 					use="literal" />
 			</output>
 		</operation>
-		<operation name="codexUpload">
-			<soap:operation soapAction="urn:codexUpload" style="rpc" />
+		<operation name="armyUpload">
+			<soap:operation soapAction="urn:armyUpload" style="rpc" />
 			<input>
 				<soap:body
 					namespace="urn:xmethodsTatooWebservice"
@@ -184,8 +184,8 @@
 					use="literal" />
 			</output>
 		</operation>
-		<operation name="getCodexList">
-			<soap:operation soapAction="urn:getCodexList" style="rpc" />
+		<operation name="getArmyList">
+			<soap:operation soapAction="urn:getArmyList" style="rpc" />
 			<input>
 				<soap:body
 					namespace="urn:xmethodsTatooWebservice"
@@ -210,8 +210,8 @@
 					use="literal" />
 			</output>
 		</operation>
-		<operation name="getCodex">
-			<soap:operation soapAction="urn:getCodex" style="rpc" />
+		<operation name="getArmy">
+			<soap:operation soapAction="urn:getArmy" style="rpc" />
 			<input>
 				<soap:body
 					namespace="urn:xmethodsTatooWebservice"

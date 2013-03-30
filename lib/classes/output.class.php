@@ -6,7 +6,7 @@ require_once(dirname(__FILE__).'/../mysql.php');
  *
  * @author Neithan
  */
-class gameOutputHandler
+class GameOutputHandler
 {
 	/**
 	 * get the list of games
@@ -70,12 +70,12 @@ class gameOutputHandler
 }
 
 /**
- * handles all output for codexes
+ * handles all output for armies
  */
-class codexOutputHandler
+class ArmyOutputHandler
 {
 	/**
-	 * get the list of codexes
+	 * get the list of armies
 	 *
 	 * @author Neithan
 	 * @param string $gameID
@@ -91,7 +91,7 @@ class codexOutputHandler
 				c.name,
 				c.version,
 				c.edition,
-				c.internal_id AS codexID,
+				c.internal_id AS armyID,
 				c.creator
 			FROM codices AS c
 			JOIN games AS g USING (game_id)
@@ -114,30 +114,30 @@ class codexOutputHandler
 	}
 
 	/**
-	 * get the given codex
+	 * get the given army
 	 *
 	 * @author Neithan
-	 * @param string $codexID
+	 * @param string $armyID
 	 * @param int|string $version
 	 * @param int|string $edition
 	 * @return array
 	 */
-	public function loadData($codexID, $version = 'latest', $edition = 'latest')
+	public function loadData($armyID, $version = 'latest', $edition = 'latest')
 	{
 		$sql = '
 			SELECT xml FROM codices
-			WHERE internal_id = '.sqlval($codexID).'
+			WHERE internal_id = '.sqlval($armyID).'
 		';
 
 		if ($version != 'latest')
 			$sql .= ' AND version = '.sqlval($version).'';
 		else
-			$sql .= ' AND version = (SELECT MAX(version) FROM codices WHERE internal_id = '.sqlval ($codexID).')';
+			$sql .= ' AND version = (SELECT MAX(version) FROM codices WHERE internal_id = '.sqlval ($armyID).')';
 
 		if ($edition != 'latest')
 			$sql .= ' AND edition = '.sqlval($edition).'';
 		else
-			$sql .= ' AND edition = (SELECT MAX(edition) FROM codices WHERE internal_id = '.sqlval($codexID).')';
+			$sql .= ' AND edition = (SELECT MAX(edition) FROM codices WHERE internal_id = '.sqlval($armyID).')';
 
 		return query($sql);
 	}

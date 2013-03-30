@@ -65,7 +65,7 @@ class SOAPHandler
 			'createDateTime' => $datetime,
 			'xml' => $gameData,
 		);
-		$gameHandler = new gameInputHandler();
+		$gameHandler = new GameInputHandler();
 		$importResult = $gameHandler->import($data);
 
 		if ($importResult)
@@ -80,23 +80,23 @@ class SOAPHandler
 	}
 
 	/**
-	 * handles the codex upload
+	 * handles the army upload
 	 *
 	 * @author Neithan
 	 * @param string $name
 	 * @param string $gameID
 	 * @param int $gameVersion
 	 * @param int $gameEdition
-	 * @param string $codexID
+	 * @param string $armyID
 	 * @param int $version
 	 * @param int $edition
 	 * @param string $creator
 	 * @param string $createDateTime
-	 * @param string $codexData
+	 * @param string $armyData
 	 * @return string
 	 * @throws SoapFault
 	 */
-	public function codexUpload($name, $gameID, $gameVersion, $gameEdition, $codexID, $version, $edition, $creator, $createDateTime, $codexData)
+	public function armyUpload($name, $gameID, $gameVersion, $gameEdition, $armyID, $version, $edition, $creator, $createDateTime, $armyData)
 	{
 		$response = '';
 		$datetime = DateTime::createFromFormat('Y-m-d\TH:i:s', $createDateTime);
@@ -108,13 +108,13 @@ class SOAPHandler
 			'gameID' => $gameID,
 			'gameVersion' => $gameVersion,
 			'gameEdition' => $gameEdition,
-			'codexID' => $codexID,
+			'armyID' => $armyID,
 			'creator' => $creator,
 			'createDateTime' => $datetime,
-			'xml' => $codexData,
+			'xml' => $armyData,
 		);
-		$codexHandler = new codexInputHandler();
-		$importResult = $codexHandler->import($data);
+		$armyHandler = new ArmyInputHandler();
+		$importResult = $armyHandler->import($data);
 
 		if ($importResult)
 			$response = 'imported';
@@ -136,14 +136,14 @@ class SOAPHandler
 	 */
 	public function getGameList($versions = null)
 	{
-		$gameHandler = new gameOutputHandler();
+		$gameHandler = new GameOutputHandler();
 		$list = $gameHandler->getList(!!$versions);
 
 		return $list;
 	}
 
 	/**
-	 * get the current list of codexes for the given game
+	 * get the current list of armies for the given game
 	 *
 	 * @author Neithan
 	 * @param string $gameID
@@ -152,10 +152,10 @@ class SOAPHandler
 	 * @param string|null $versions
 	 * @return array
 	 */
-	public function getCodexList($gameID, $gameVersion, $gameEdition, $versions = null)
+	public function getArmyList($gameID, $gameVersion, $gameEdition, $versions = null)
 	{
-		$codexHandler = new codexOutputHandler();
-		$list = $codexHandler->getList($gameID, $gameVersion, $gameEdition, !!$versions);
+		$armyHandler = new ArmyOutputHandler();
+		$list = $armyHandler->getList($gameID, $gameVersion, $gameEdition, !!$versions);
 
 		return $list;
 	}
@@ -171,22 +171,22 @@ class SOAPHandler
 	 */
 	public function getGame($gameID, $version = null, $edition = null)
 	{
-		$gameHandler = new gameOutputHandler();
+		$gameHandler = new GameOutputHandler();
 		return $gameHandler->loadData($gameID, $version ? $version : 'latest', $edition ? $edition : 'latest');
 	}
 
 	/**
-	 * get the given codex
+	 * get the given army
 	 *
 	 * @author Neithan
-	 * @param string $codexID
+	 * @param string $armyID
 	 * @param int|null $version
 	 * @param int|null $edition
 	 * @return array
 	 */
-	public function getCodex($codexID, $version = null, $edition = null)
+	public function getArmy($armyID, $version = null, $edition = null)
 	{
-		$codexHandler = new codexOutputHandler();
-		return $codexHandler->loadData($codexID, $version ? $version : 'latest', $edition ? $edition : 'latest');
+		$armyHandler = new ArmyOutputHandler();
+		return $armyHandler->loadData($armyID, $version ? $version : 'latest', $edition ? $edition : 'latest');
 	}
 }

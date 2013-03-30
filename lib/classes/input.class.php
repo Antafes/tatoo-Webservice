@@ -6,7 +6,7 @@ require_once(dirname(__FILE__).'/../mysql.php');
  *
  * @author Neithan
  */
-class gameInputHandler
+class GameInputHandler
 {
 	/**
 	 * contains the game data
@@ -79,20 +79,20 @@ class gameInputHandler
 }
 
 /**
- * handles all input for codexes
+ * handles all input for armies
  *
  * @author Neithan
  */
-class codexInputHandler
+class ArmyInputHandler
 {
 	/**
-	 * contains the codex data
+	 * contains the army data
 	 * @var array
 	 */
 	private $data;
 
 	/**
-	 * check whether the codex exists or not
+	 * check whether the army exists or not
 	 *
 	 * @author Neithan
 	 * @return boolean
@@ -103,7 +103,7 @@ class codexInputHandler
 			SELECT c.*
 			FROM codices AS c
 			JOIN games AS g USING (game_id)
-			WHERE c.internal_id = '.sqlval($this->data['codexID']).'
+			WHERE c.internal_id = '.sqlval($this->data['armyID']).'
 				AND c.version = '.sqlval($this->data['version']).'
 				AND c.edition = '.sqlval($this->data['edition']).'
 				AND g.internal_id = '.sqlval($this->data['gameID']).'
@@ -119,7 +119,7 @@ class codexInputHandler
 	}
 
 	/**
-	 * import a new codex
+	 * import a new army
 	 *
 	 * @author Neithan
 	 * @param array $data
@@ -141,7 +141,7 @@ class codexInputHandler
 					name = '.sqlval($this->data['name']).',
 					version = '.sqlval($this->data['version']).',
 					edition = '.sqlval($this->data['edition']).',
-					internal_id = '.sqlval($this->data['codexID']).',
+					internal_id = '.sqlval($this->data['armyID']).',
 					creator = '.sqlval($this->data['creator']).',
 					create_datetime = '.sqlval($this->data['createDateTime']->format('Y-m-d H:i:s')).',
 					xml = '.sqlval($this->data['xml']).'
@@ -155,7 +155,7 @@ class codexInputHandler
 	}
 
 	/**
-	 * get the codex data
+	 * get the army data
 	 *
 	 * @author Neithan
 	 * @return array
