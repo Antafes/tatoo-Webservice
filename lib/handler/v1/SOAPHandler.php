@@ -1,6 +1,6 @@
 <?php
-require_once(dirname(__FILE__).'/input.class.php');
-require_once(dirname(__FILE__).'/output.class.php');
+require_once(dirname(__FILE__).'/../../classes/input.inc.php');
+require_once(dirname(__FILE__).'/../../classes/output.class.php');
 
 /**
  * This class handles the incoming and outgoing SOAP messages
@@ -12,7 +12,6 @@ class SOAPHandler
 	/**
 	 * check if the response is set
 	 *
-	 * @author Neithan
 	 * @param mixed $response
 	 * @return mixed
 	 * @throws SoapFault
@@ -20,7 +19,11 @@ class SOAPHandler
 	private function checkResponse($response)
 	{
 		if (!$response)
-			throw new SoapFault('Client', 'something veeeery bad happened', 'wsdl.php');
+			throw new TatooSoapFault(
+				TatooSoapFault::CLIENT,
+				'something veeeery bad happened',
+				'wsdl.php'
+			);
 
 		return $response;
 	}
@@ -28,7 +31,6 @@ class SOAPHandler
 	/**
 	 * get the current tatoo version
 	 *
-	 * @author Neithan
 	 * @return string
 	 */
 	public function getTatooVersion()
@@ -41,7 +43,6 @@ class SOAPHandler
 	/**
 	 * handles the game upload
 	 *
-	 * @author Neithan
 	 * @param string $name
 	 * @param string $gameID
 	 * @param int $version
@@ -65,8 +66,8 @@ class SOAPHandler
 			'createDateTime' => $datetime,
 			'xml' => $gameData,
 		);
-		$gameHandler = new GameInputHandler();
-		$importResult = $gameHandler->import($data);
+		$gameHandler = new GameInputHandler($data);
+		$importResult = $gameHandler->import();
 
 		if ($importResult)
 			$response = 'imported';
@@ -82,7 +83,6 @@ class SOAPHandler
 	/**
 	 * handles the army upload
 	 *
-	 * @author Neithan
 	 * @param string $name
 	 * @param string $gameID
 	 * @param int $gameVersion
@@ -113,8 +113,8 @@ class SOAPHandler
 			'createDateTime' => $datetime,
 			'xml' => $armyData,
 		);
-		$armyHandler = new ArmyInputHandler();
-		$importResult = $armyHandler->import($data);
+		$armyHandler = new ArmyInputHandler($data);
+		$importResult = $armyHandler->import();
 
 		if ($importResult)
 			$response = 'imported';
@@ -130,22 +130,17 @@ class SOAPHandler
 	/**
 	 * get the current list of games
 	 *
-	 * @author Neithan
 	 * @param string|null $versions
 	 * @return array
 	 */
 	public function getGameList($versions = null)
 	{
-		$gameHandler = new GameOutputHandler();
-		$list = $gameHandler->getList(!!$versions);
-
-		return $list;
+		return GameOutputHandler::getList(!!$versions);
 	}
 
 	/**
 	 * get the current list of armies for the given game
 	 *
-	 * @author Neithan
 	 * @param string $gameID
 	 * @param int $gameVersion
 	 * @param int $gameEdition
@@ -154,16 +149,12 @@ class SOAPHandler
 	 */
 	public function getArmyList($gameID, $gameVersion, $gameEdition, $versions = null)
 	{
-		$armyHandler = new ArmyOutputHandler();
-		$list = $armyHandler->getList($gameID, $gameVersion, $gameEdition, !!$versions);
-
-		return $list;
+		return ArmyOutputHandler::getList($gameID, $gameVersion, $gameEdition, !!$versions);
 	}
 
 	/**
 	 * get the given game
 	 *
-	 * @author Neithan
 	 * @param string $gameID
 	 * @param int|null $version
 	 * @param int|null $edition
@@ -171,22 +162,36 @@ class SOAPHandler
 	 */
 	public function getGame($gameID, $version = null, $edition = null)
 	{
-		$gameHandler = new GameOutputHandler();
-		return $gameHandler->loadData($gameID, $version ? $version : 'latest', $edition ? $edition : 'latest');
+		$gameHandler = new GameOutputHandler(array(
+			'gameID' => $gameID,
+			'version' => $version,
+			'edition' => $edition,
+		));
+
+		return $gameHandler->getData();
 	}
 
 	/**
 	 * get the given army
 	 *
-	 * @author Neithan
 	 * @param string $armyID
 	 * @param int|null $version
 	 * @param int|null $edition
 	 * @return array
 	 */
-	public function getArmy($armyID, $version = null, $edition = null)
+	public function getArmy($gameID, $gameVersion, $gameEdition, $armyID, $version = null, $edition = null)
 	{
-		$armyHandler = new ArmyOutputHandler();
-		return $armyHandler->loadData($armyID, $version ? $version : 'latest', $edition ? $edition : 'latest');
+		$armyHandler = new ArmyOutputHandler(
+			array(
+				'gameID' => $gameID,
+				'gameVersion' => $gameVersion,
+				'gameEdition' => $gameEdition,
+				'armyID' => $armyID,
+				'version' => $version,
+				'edition' => $edition,
+			)
+		);
+
+		return $armyHandler->getData();
 	}
 }

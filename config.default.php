@@ -8,4 +8,4 @@ $GLOBALS['db']['charset'] = 'utf8';
 $GLOBALS['debug'] = false;
 $GLOBALS['config']['baseUrl'] = 'http://localhost';
 
-require_once('config.php');
+require_once(dirname(__FILE__).'/config.php');
