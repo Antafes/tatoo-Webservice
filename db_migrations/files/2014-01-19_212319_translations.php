@@ -52,11 +52,17 @@ $DB_MIGRATION = array(
 
 	'down' => function ($migration_metadata) {
 
-		$result = query_raw('
-			ALTER TABLE tbl CHANGE col col_to_delete TEXT
+		$results = array();
+
+		$results[] = query_raw('
+			DELETE TABLE `translations`
 		');
 
-		return !!$result;
+		$results[] = query_raw('
+			DELETE TABLE `languages`
+		');
+
+		return !in_array(false, $results);
 
 	}
 
