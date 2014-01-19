@@ -1,6 +1,4 @@
 <?php
-require_once(dirname(__FILE__).'/../../classes/input.inc.php');
-require_once(dirname(__FILE__).'/../../classes/output.class.php');
 
 /**
  * This class handles the incoming and outgoing SOAP messages
@@ -19,8 +17,8 @@ class SOAPHandler
 	private function checkResponse($response)
 	{
 		if (!$response)
-			throw new TatooSoapFault(
-				TatooSoapFault::CLIENT,
+			throw new \WS\TatooSoapFault(
+				\WS\TatooSoapFault::CLIENT,
 				'something veeeery bad happened',
 				'wsdl.php'
 			);
@@ -35,7 +33,7 @@ class SOAPHandler
 	 */
 	public function getTatooVersion()
 	{
-		$configurations = new configurationOutputHandler();
+		$configurations = new \WS\configurationOutputHandler();
 
 		return $configurations->getValue('tatooVersion');
 	}
@@ -56,7 +54,7 @@ class SOAPHandler
 	public function gameUpload($name, $gameID, $version, $edition, $creator, $createDateTime, $gameData)
 	{
 		$response = '';
-		$datetime = DateTime::createFromFormat('Y-m-d\TH:i:s', $createDateTime);
+		$datetime = \DateTime::createFromFormat('Y-m-d\TH:i:s', $createDateTime);
 		$data = array(
 			'name' => $name,
 			'version' => $version,
@@ -66,7 +64,7 @@ class SOAPHandler
 			'createDateTime' => $datetime,
 			'xml' => $gameData,
 		);
-		$gameHandler = new GameInputHandler($data);
+		$gameHandler = new \WS\GameInputHandler($data);
 		$importResult = $gameHandler->import();
 
 		if ($importResult)
@@ -75,7 +73,11 @@ class SOAPHandler
 			$response = 'alreadyExisting';
 
 		if ($response == 'alreadyExisting')
-			throw new SoapFault('Client', 'already existing', 'wsdl.php');
+		{
+			throw new \WS\TatooSoapFault(
+				\WS\TatooSoapFault::CLIENT, 'already existing', 'wsdl.php'
+			);
+		}
 
 		return $this->checkResponse($response);
 	}
@@ -99,7 +101,7 @@ class SOAPHandler
 	public function armyUpload($name, $gameID, $gameVersion, $gameEdition, $armyID, $version, $edition, $creator, $createDateTime, $armyData)
 	{
 		$response = '';
-		$datetime = DateTime::createFromFormat('Y-m-d\TH:i:s', $createDateTime);
+		$datetime = \DateTime::createFromFormat('Y-m-d\TH:i:s', $createDateTime);
 
 		$data = array(
 			'name' => $name,
@@ -113,7 +115,7 @@ class SOAPHandler
 			'createDateTime' => $datetime,
 			'xml' => $armyData,
 		);
-		$armyHandler = new ArmyInputHandler($data);
+		$armyHandler = new \WS\ArmyInputHandler($data);
 		$importResult = $armyHandler->import();
 
 		if ($importResult)
@@ -122,7 +124,11 @@ class SOAPHandler
 			$response = 'alreadyExisting';
 
 		if ($response == 'alreadyExisting')
-			throw new SoapFault('Client', 'already existing', 'wsdl.php');
+		{
+			throw new \WS\TatooSoapFault(
+				\WS\TatooSoapFault::CLIENT, 'already existing', 'wsdl.php'
+			);
+		}
 
 		return $this->checkResponse($response);
 	}
@@ -135,7 +141,7 @@ class SOAPHandler
 	 */
 	public function getGameList($versions = null)
 	{
-		return GameOutputHandler::getList(!!$versions);
+		return \WS\GameOutputHandler::getList(!!$versions);
 	}
 
 	/**
@@ -149,7 +155,7 @@ class SOAPHandler
 	 */
 	public function getArmyList($gameID, $gameVersion, $gameEdition, $versions = null)
 	{
-		return ArmyOutputHandler::getList($gameID, $gameVersion, $gameEdition, !!$versions);
+		return \WS\ArmyOutputHandler::getList($gameID, $gameVersion, $gameEdition, !!$versions);
 	}
 
 	/**
@@ -162,7 +168,7 @@ class SOAPHandler
 	 */
 	public function getGame($gameID, $version = null, $edition = null)
 	{
-		$gameHandler = new GameOutputHandler(array(
+		$gameHandler = new \WS\GameOutputHandler(array(
 			'gameID' => $gameID,
 			'version' => $version,
 			'edition' => $edition,
@@ -181,7 +187,7 @@ class SOAPHandler
 	 */
 	public function getArmy($gameID, $gameVersion, $gameEdition, $armyID, $version = null, $edition = null)
 	{
-		$armyHandler = new ArmyOutputHandler(
+		$armyHandler = new \WS\ArmyOutputHandler(
 			array(
 				'gameID' => $gameID,
 				'gameVersion' => $gameVersion,

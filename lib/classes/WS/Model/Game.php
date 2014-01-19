@@ -1,13 +1,12 @@
 <?php
-require_once(dirname(__FILE__).'/../../mysql.php');
-require_once(dirname(__FILE__).'/../model.php');
+namespace WS\Model;
 
 /**
  * Model for the games
  *
  * @author Neithan
  */
-class GameModel extends Model
+class Game extends \WS\Model
 {
 	/**
 	 * @param array $data
@@ -110,7 +109,7 @@ class GameModel extends Model
 		$this->internalId     = $data['gameID'] ? $data['gameID'] : $data['internal_id'];
 		$this->creator        = $data['creator'];
 		$this->createDatetime = $data['createDateTime'] ? $data['createDateTime']
-			: DateTime::createFromFormat('Y-m-d H:i:s', $data['create_datetime']);
+			: \DateTime::createFromFormat('Y-m-d H:i:s', $data['create_datetime']);
 		$this->xml            = $data['gameData'] ? $data['gameData'] : $data['xml'];
 	}
 

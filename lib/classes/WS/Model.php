@@ -1,4 +1,6 @@
 <?php
+namespace WS;
+
 /**
  * Description of model
  *
@@ -37,7 +39,7 @@ abstract class Model
 	protected $creator;
 
 	/**
-	 * @var DateTime
+	 * @var \DateTime
 	 */
 	protected $createDatetime;
 

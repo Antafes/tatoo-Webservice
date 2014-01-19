@@ -1,10 +1,12 @@
 <?php
+namespace WS;
+
 /**
  * Fetches the tatoo configurations
  *
  * @author Neithan
  */
-class configurationOutputHandler
+class ConfigurationOutputHandler
 {
 	/**
 	 * @var array

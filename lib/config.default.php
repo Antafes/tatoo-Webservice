@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__.'/util/general.php');
+
 $GLOBALS['db']['host'] = 'localhost';
 $GLOBALS['db']['user'] = 'root';
 $GLOBALS['db']['password'] = '';
@@ -8,4 +10,10 @@ $GLOBALS['db']['charset'] = 'utf8';
 $GLOBALS['debug'] = false;
 $GLOBALS['config']['baseUrl'] = 'http://localhost';
 
-require_once(dirname(__FILE__).'/config.php');
+//autoloader
+spl_autoload_register('classLoad');
+
+if (file_exists(__DIR__.'/config.php'))
+	require_once(__DIR__.'/config.php');
+
+require_once(__DIR__.'/util/mysql.php');

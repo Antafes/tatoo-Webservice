@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__).'/models/game.php');
+namespace WS;
 
 /**
  * handles all input for games
@@ -9,7 +9,7 @@ require_once(dirname(__FILE__).'/models/game.php');
 class GameInputHandler
 {
 	/**
-	 * @var GameModel
+	 * @var Model\Game
 	 */
 	private $gameModel;
 
@@ -27,7 +27,7 @@ class GameInputHandler
 	{
 		$this->data = $data;
 
-		$this->gameModel = new GameModel($data);
+		$this->gameModel = new Model\Game($data);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__).'/models/army.php');
+namespace WS;
 
 /**
  * handles all input for armies
@@ -9,12 +9,12 @@ require_once(dirname(__FILE__).'/models/army.php');
 class ArmyInputHandler
 {
 	/**
-	 * @var GameModel
+	 * @var Model\Army
 	 */
 	private $gameModel;
 
 	/**
-	 * @var ArmyModel
+	 * @var Model\Army
 	 */
 	private $armyModel;
 
@@ -30,11 +30,11 @@ class ArmyInputHandler
 	function __construct($data)
 	{
 		$this->data = $data;
-		$this->gameModel = new GameModel(
+		$this->gameModel = new Model\Game(
 			$this->data['gameID'], $this->data['gameVersion'], $this->data['gameEdition']
 		);
 
-		$this->armyModel = new ArmyModel(
+		$this->armyModel = new Model\Army(
 			$this->gameModel->getGameId(),
 			array(
 				$this->data['armyID'],
@@ -63,7 +63,7 @@ class ArmyInputHandler
 	 * @author Neithan	 * @param array $data
 	 * @return boolean
 	 */
-	public function import($data)
+	public function import()
 	{
 		if (!$this->checkExisting())
 		{

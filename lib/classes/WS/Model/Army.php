@@ -1,13 +1,12 @@
 <?php
-require_once(dirname(__FILE__).'/../../mysql.php');
-require_once(dirname(__FILE__).'/../model.php');
+namespace WS\Model;
 
 /**
  * Model for the armies
  *
  * @author Neithan
  */
-class ArmyModel extends Model
+class Army extends \WS\Model
 {
 	/**
 	 * @var int
@@ -119,7 +118,7 @@ class ArmyModel extends Model
 		$this->internalId     = $data['armyID'] ? $data['armyID'] : $data['internal_id'];
 		$this->creator        = $data['creator'];
 		$this->createDatetime = $data['createDateTime'] ? $data['createDateTime']
-			: DateTime::createFromFormat('Y-m-d H:i:s', $data['create_datetime']);
+			: \DateTime::createFromFormat('Y-m-d H:i:s', $data['create_datetime']);
 		$this->xml            = $data['armyData'] ? $data['armyData'] : $data['xml'];
 	}
 

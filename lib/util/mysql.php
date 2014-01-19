@@ -1,6 +1,4 @@
 <?php
-require_once(dirname(__FILE__).'/../config.default.php');
-
 /**
  * handles the MySQL queries
  * if the query is a select, it returns an array if there is only one value, otherwise it returns the value

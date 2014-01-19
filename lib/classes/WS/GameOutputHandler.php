@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__).'/models/game.php');
+namespace WS;
 
 /**
  * handles all output for games
@@ -9,7 +9,7 @@ require_once(dirname(__FILE__).'/models/game.php');
 class GameOutputHandler
 {
 	/**
-	 * @var GameModel
+	 * @var Model\Game
 	 */
 	private $gameModel;
 
@@ -27,7 +27,7 @@ class GameOutputHandler
 	{
 		$this->data = $data;
 
-		$this->gameModel = new GameModel($this->data);
+		$this->gameModel = new Model\Game($this->data);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class GameOutputHandler
 	 */
 	public static function getList($version = null)
 	{
-		return GameModel::getGameList($version);
+		return Model\Game::getGameList($version);
 	}
 
 	/**

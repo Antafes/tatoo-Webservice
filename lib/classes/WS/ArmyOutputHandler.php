@@ -1,4 +1,6 @@
 <?php
+namespace WS;
+
 /**
  * handles all output for armies
  *
@@ -7,12 +9,12 @@
 class ArmyOutputHandler
 {
 	/**
-	 * @var GameModel
+	 * @var Model\Game
 	 */
 	private $gameModel;
 
 	/**
-	 * @var ArmyModel
+	 * @var Model\Army
 	 */
 	private $armyModel;
 
@@ -28,13 +30,15 @@ class ArmyOutputHandler
 	function __construct($data)
 	{
 		$this->data = $data;
-		$this->gameModel = new GameModel(array(
-			'gameID' => $this->data['gameID'],
-			'gameVersion' => $this->data['gameVersion'],
-			'gameEdition' => $this->data['gameEdition'],
-		));
+		$this->gameModel = new Model\Game(
+			array(
+				'gameID' => $this->data['gameID'],
+				'gameVersion' => $this->data['gameVersion'],
+				'gameEdition' => $this->data['gameEdition'],
+			)
+		);
 
-		$this->armyModel = new ArmyModel(
+		$this->armyModel = new Model\Army(
 			$this->gameModel->getGameId(),
 			array(
 				'armyID' => $this->data['armyID'],
@@ -55,7 +59,7 @@ class ArmyOutputHandler
 	 */
 	public static function getList($gameID, $gameVersion, $gameEdition, $version = null)
 	{
-		return ArmyModel::getArmyList($gameID, $gameVersion, $gameEdition, $version);
+		return Model\Army::getArmyList($gameID, $gameVersion, $gameEdition, $version);
 	}
 
 	/**

@@ -1,4 +1,6 @@
 <?php
+namespace WS;
+
 /**
  * Handles the WSDLs
  *
