@@ -10,4 +10,5 @@ class TatooSoapFault extends \SoapFault
 {
 	const WSDL = 'WSDL';
 	const CLIENT = 'client';
+	const MYSQL = 'mysql';
 }
