@@ -10,6 +10,18 @@ body
 	clear: both !important;
 }
 
+input
+{
+	border: 1px solid #878787;
+	padding: 5px;
+	border-radius: 3px;
+}
+
+input[type=submit]
+{
+	background-color: #ffffff;
+}
+
 a.button
 {
 	text-decoration: none;
@@ -74,103 +86,19 @@ th.centered
 	margin-bottom: 10px;
 }
 
-table.orders
+table.userList
 {
-	border-collapse: collapse;
+	margin-bottom: 10px;
 }
 
-table.orders tr
+#admin td.buttons input[type=submit]
 {
-	border: 1px solid #000000;
+	float: left;
 }
 
-table.orders td,
-table.orders th
+#admin td.buttons a.button
 {
-	padding: 5px;
-}
-
-table.orders thead
-{
-	display: block;
-}
-
-table.orders thead tr
-{
-	border-bottom-width: 2px;
-}
-
-table.orders tbody
-{
-	display: block;
-	height: 700px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-}
-
-table.orders tbody tr:first-child
-{
-	border-top: 0 none;
-}
-
-table.orders .item
-{
-	width: 200px;
-}
-
-table.orders .singlePrice,
-table.orders .sum
-{
-	width: 120px;
-}
-
-table.orders .amount,
-table.orders .amountSold
-{
-	width: 70px;
-}
-
-table.orders .sold
-{
-	width: 100px;
-}
-
-table.orders .createDatetime,
-table.orders .endDatetime
-{
-	width: 130px;
-}
-
-table.orders .sellingFor
-{
-	width: 150px;
-}
-
-table.orders .noOrders
-{
-	text-align: center;
-	font-weight: bold;
-}
-
-table.addOrder .label
-{
-	width: 100px;
-	vertical-align: top;
-	padding-top: 5px;
-}
-
-table.addOrder .setSellingForUser
-{
+	margin-top: 2px;
 	margin-left: 5px;
-}
-
-table.addOrder .setSellingForUser a
-{
-	display: block;
-	margin-bottom: 3px;
-}
-
-#soldDialog table .label
-{
-	width: 130px;
+	cursor: default;
 }

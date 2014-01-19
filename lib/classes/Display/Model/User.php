@@ -88,6 +88,13 @@ class User
 		return self::fillUserData($object, $userData);
 	}
 
+	/**
+	 * Fill the user data from the database into the given User object.
+	 *
+	 * @param \self $object
+	 * @param array $userData
+	 * @return \self
+	 */
 	protected static function fillUserData($object, $userData)
 	{
 		$object->userId        = intval($userData['userId']);
@@ -101,22 +108,27 @@ class User
 	}
 
 	/**
-	 * Create a new user and save it into the database.
+	 * Create a new user, save it into the database and send a mail to the user.
 	 *
 	 * @param string $name
 	 * @param string $password
+	 * @param string $email
 	 * @return integer
 	 */
-	public static function createUser($name, $password)
+	public static function createUser($name, $password, $email)
 	{
 		$salt = uniqid();
 		$sql = '
 			INSERT INTO users
 			SET name = '.sqlval($name).',
 				password = '.sqlval(self::encryptPassword($password, $salt)).',
+				email = '.sqlval($email).',
 				salt = '.sqlval($salt).'
 		';
-		return query($sql);
+		$id = query($sql);
+		$user = self::getUserById($id);
+
+		//@TODO mail versenden
 	}
 
 	/**
@@ -145,6 +157,43 @@ class User
 	protected static function encryptPassword($password, $salt)
 	{
 		return md5($password.'-'.$salt);
+	}
+
+	/**
+	 * Creates a random password with a-z, A-Z, 0-1 and some special characters.
+	 * The default password length is 8 characters.
+	 *
+	 * @param integer $length
+	 * @return string
+	 */
+	public static function createPassword($length = 8)
+	{
+		// Found on http://stackoverflow.com/a/1837443
+		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"§$%&/()=?';
+		$count = mb_strlen($chars);
+
+		for ($i = 0, $result = ''; $i < $length; $i++) {
+			$index = rand(0, $count - 1);
+			$result .= mb_substr($chars, $index, 1);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Delete the user with the given user id.
+	 *
+	 * @param integer $userId
+	 * @return integer
+	 */
+	public static function deleteUser($userId)
+	{
+		$sql = '
+			UPDATE users
+			SET deleted = 1
+			WHERE `userId` = '.sqlval($userId).'
+		';
+		return query($sql);
 	}
 
 	/**

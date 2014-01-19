@@ -4,7 +4,7 @@
 		<div class="error">{$error}</div>
 	{/if}
 	<form method="post" action="index.php?page=Login">
-		<table>
+		<table class="collapse">
 			<tr>
 				<td>{$translator->getTranslation('username')}:</td>
 				<td>

@@ -29,6 +29,11 @@ function classLoad($name)
 		require_once(__DIR__.'/../smarty3/Smarty.class.php');
 		return true;
 	}
+	elseif ($name == 'PHPMailer')
+	{
+		require_once(__DIR__.'/../phpmailer/class.phpmailer.php');
+		return true;
+	}
 
 	return false;
 }
