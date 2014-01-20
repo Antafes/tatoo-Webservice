@@ -40,7 +40,9 @@ class Admin extends \Display\Page
 
 		if ($_POST['createUser'])
 		{
-			$this->createUser($_POST['createUser'], $_POST['username'], $_POST['email']);
+			$this->createUser(
+				$_POST['createUser'], $_POST['username'], $_POST['email'], $_POST['language']
+			);
 		}
 
 		$this->template->assign('userList', $this->getUserList());
@@ -86,7 +88,7 @@ class Admin extends \Display\Page
 	 * @param string $username
 	 * @param string $email
 	 */
-	protected function createUser($salt, $username, $email)
+	protected function createUser($salt, $username, $email, $languageId)
 	{
 		if (!$salt || $salt != $_SESSION['formSalts']['createUser'])
 			return;
@@ -105,7 +107,7 @@ class Admin extends \Display\Page
 
 		$password = \Display\Model\User::createPassword(12);
 
-		if (\Display\Model\User::createUser($username, $password, $email))
+		if (\Display\Model\User::createUser($username, $password, $email, $languageId))
 		{
 			$this->template->assign('message', 'registrationSuccessful');
 			$_GET['action'] = 'list';

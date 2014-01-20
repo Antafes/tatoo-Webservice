@@ -26,6 +26,11 @@ class User
 	/**
 	 * @var string
 	 */
+	protected $email;
+
+	/**
+	 * @var string
+	 */
 	protected $salt;
 
 	/**
@@ -100,6 +105,7 @@ class User
 		$object->userId        = intval($userData['userId']);
 		$object->name          = $userData['name'];
 		$object->password      = $userData['password'];
+		$object->password      = $userData['email'];
 		$object->salt          = $userData['salt'];
 		$object->admin         = !!$userData['admin'];
 		$object->languageId    = intval($userData['languageId']);
@@ -115,7 +121,7 @@ class User
 	 * @param string $email
 	 * @return integer
 	 */
-	public static function createUser($name, $password, $email)
+	public static function createUser($name, $password, $email, $languageId)
 	{
 		$salt = uniqid();
 		$sql = '
@@ -123,12 +129,33 @@ class User
 			SET name = '.sqlval($name).',
 				password = '.sqlval(self::encryptPassword($password, $salt)).',
 				email = '.sqlval($email).',
-				salt = '.sqlval($salt).'
+				salt = '.sqlval($salt).',
+				languageId = '.sqlval($languageId).'
 		';
 		$id = query($sql);
 		$user = self::getUserById($id);
+		$translator = \Display\Translator::getInstance();
 
-		//@TODO mail versenden
+		$mailer = new \PHPMailer();
+		$mailer->setFrom('noreply@wafriv.de', $translator->getTranslation('mailSender'));
+		$mailer->addAddress($user->getEmail());
+		$mailer->set('Subject', $translator->getTranslation('mailCreatedUser'));
+
+		$template = new \Display\Template();
+		$template->getTranslator()->setCurrentLanguage($user->getLanguageId(), false);
+		$template->setTemplate('mails/createdUser.tpl');
+		$template->assign('username', $user->getName());
+		$template->assign('password', $password);
+		$message = $template->render(true);
+
+		$mailer->msgHTML($message);
+		$mailer->send();
+
+		// Reset the translator language to the current users language. Otherwise the translations
+		// will get fucked up.
+		$translator->setCurrentLanguage($_COOKIE['language']);
+
+		return $user->getUserId();
 	}
 
 	/**
@@ -143,6 +170,7 @@ class User
 			SELECT COUNT(*)
 			FROM users
 			WHERE name = '.sqlval($name).'
+				AND !deleted
 		';
 		return query($sql);
 	}
@@ -210,6 +238,14 @@ class User
 	public function getName()
 	{
 		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
 	}
 
 	/**

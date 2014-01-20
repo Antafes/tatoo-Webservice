@@ -56,6 +56,9 @@ class Template
 	 */
 	public function setTemplate($template)
 	{
+		if (substr($template, -4) == '.tpl')
+			$template = substr($template, 0, -4);
+
 		$this->template = $template;
 	}
 
@@ -74,10 +77,17 @@ class Template
 	/**
 	 * Render the defined template
 	 */
-	public function render()
+	public function render($return = false)
 	{
-		echo $this->smarty->display($this->template.'.tpl');
-		unset($_SESSION['scripts']);
+		if ($return)
+		{
+			return $this->smarty->fetch($this->template.'.tpl');
+		}
+		else
+		{
+			echo $this->smarty->display($this->template.'.tpl');
+			unset($_SESSION['scripts']);
+		}
 	}
 
 	/**

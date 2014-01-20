@@ -131,11 +131,14 @@ class Translator
 	 * Set the language of the user
 	 *
 	 * @param integer $currentLanguage
+	 * @param boolean $setUserLanguage
 	 */
-	public function setCurrentLanguage($currentLanguage)
+	public function setCurrentLanguage($currentLanguage, $setUserLanguage = true)
 	{
 		$this->currentLanguage = $currentLanguage;
-		$this->setUserLanguage($this->currentLanguage);
+
+		if ($setUserLanguage)
+			$this->setUserLanguage($this->currentLanguage);
 	}
 
 	/**

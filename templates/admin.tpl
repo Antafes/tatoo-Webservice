@@ -66,10 +66,22 @@
 					</tr>
 					<tr>
 						<td>
+							<label for="languageSelect">{$translator->getTranslation('language')}</label>
+						</td>
+						<td>
+							<select id="languageSelect" name="language">
+								{foreach from=$languages item='language'}
+									<option value="{$language->getLanguageId()}">{$translator->getTranslation($language->getLanguage())}</option>
+								{/foreach}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
 							<label for="adminCheckbox">{$translator->getTranslation('admin')}</label>
 						</td>
 						<td>
-							<input id="adminCheckbox" type="checkbox" name="admin" value="1" />
+							<input id="adminCheckbox" type="checkbox" name="admin" value="1"{if $smarty.post.admin} checked="checked"{/if} />
 						</td>
 					</tr>
 					<tr>
