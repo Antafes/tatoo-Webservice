@@ -81,22 +81,30 @@ th.centered
 	padding: 3px;
 }
 
+.message
+{
+	margin-bottom: 10px;
+}
+
 .subMenu
 {
 	margin-bottom: 10px;
 }
 
-table.userList
+table.userList,
+table.configurationList
 {
 	margin-bottom: 10px;
 }
 
-#admin td.buttons input[type=submit]
+#admin td.buttons input[type=submit],
+#configurations td.buttons input[type=submit]
 {
 	float: left;
 }
 
-#admin td.buttons a.button
+#admin td.buttons a.button,
+#configurations td.buttons a.button
 {
 	margin-top: 2px;
 	margin-left: 5px;
