@@ -138,92 +138,64 @@
 		<operation name="getTatooVersion">
 			<soap:operation soapAction="urn:getTatooVersion" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 		<operation name="gameUpload">
 			<soap:operation soapAction="urn:gameUpload" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 		<operation name="armyUpload">
 			<soap:operation soapAction="urn:armyUpload" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 		<operation name="getGameList">
 			<soap:operation soapAction="urn:getGameList" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 		<operation name="getArmyList">
 			<soap:operation soapAction="urn:getArmyList" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 		<operation name="getGame">
 			<soap:operation soapAction="urn:getGame" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 		<operation name="getArmy">
 			<soap:operation soapAction="urn:getArmy" style="rpc" />
 			<input>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</input>
 			<output>
-				<soap:body
-					namespace="urn:xmethodsTatooWebservice"
-					use="literal" />
+				<soap:body namespace="urn:xmethodsTatooWebservice" use="literal" />
 			</output>
 		</operation>
 	</binding>
