@@ -2,6 +2,7 @@
 <div id="admin">
 	{if $error}
 		<div class="error">{$error}</div>
+		<br /><br />
 	{/if}
 	{if $message}
 		<div class="message">{$message}</div>
