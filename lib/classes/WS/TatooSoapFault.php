@@ -8,7 +8,7 @@ namespace WS;
  */
 class TatooSoapFault extends \SoapFault
 {
-	const WSDL = 'WSDL';
-	const CLIENT = 'client';
-	const MYSQL = 'mysql';
+	const NORESPONSE = 'TSF1';
+	const ALREADYEXISTS = 'TSF2';
+	const MYSQLCONNECT = 'TMS1';
 }

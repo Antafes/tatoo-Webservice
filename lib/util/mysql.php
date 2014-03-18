@@ -152,9 +152,9 @@ function connect()
 		if ($mysql->connect_error)
 		{
 			if ($GLOBALS['debug'])
-				throw new \WS\TatooSoapFault(\WS\TatooSoapFault::MYSQL, $mysql->connect_error);
+				throw new \WS\TatooSoapFault(\WS\TatooSoapFault::MYSQLCONNECT, $mysql->connect_error);
 			else
-				throw new \WS\TatooSoapFault(\WS\TatooSoapFault::MYSQL, 'could not connect to database');
+				throw new \WS\TatooSoapFault(\WS\TatooSoapFault::MYSQLCONNECT, 'could not connect to database');
 		}
 		else
 		{

@@ -12,15 +12,13 @@ class SOAPHandler
 	 *
 	 * @param mixed $response
 	 * @return mixed
-	 * @throws SoapFault
+	 * @throws \WS\TatooSoapFault
 	 */
 	private function checkResponse($response)
 	{
 		if (!$response)
 			throw new \WS\TatooSoapFault(
-				\WS\TatooSoapFault::CLIENT,
-				'something veeeery bad happened',
-				'wsdl.php'
+				\WS\TatooSoapFault::NORESPONSE, 'something veeeery bad happened'
 			);
 
 		return $response;
@@ -49,7 +47,7 @@ class SOAPHandler
 	 * @param string $createDateTime
 	 * @param string $gameData
 	 * @return string
-	 * @throws SoapFault
+	 * @throws \WS\TatooSoapFault
 	 */
 	public function gameUpload($name, $gameID, $version, $edition, $creator, $createDateTime, $gameData)
 	{
@@ -73,11 +71,7 @@ class SOAPHandler
 			$response = 'alreadyExisting';
 
 		if ($response == 'alreadyExisting')
-		{
-			throw new \WS\TatooSoapFault(
-				\WS\TatooSoapFault::CLIENT, 'already existing', 'wsdl.php'
-			);
-		}
+			throw new \WS\TatooSoapFault(\WS\TatooSoapFault::ALREADYEXISTS, 'already existing');
 
 		return $this->checkResponse($response);
 	}
@@ -96,7 +90,7 @@ class SOAPHandler
 	 * @param string $createDateTime
 	 * @param string $armyData
 	 * @return string
-	 * @throws SoapFault
+	 * @throws \WS\TatooSoapFault
 	 */
 	public function armyUpload($name, $gameID, $gameVersion, $gameEdition, $armyID, $version, $edition, $creator, $createDateTime, $armyData)
 	{
@@ -125,9 +119,7 @@ class SOAPHandler
 
 		if ($response == 'alreadyExisting')
 		{
-			throw new \WS\TatooSoapFault(
-				\WS\TatooSoapFault::CLIENT, 'already existing', 'wsdl.php'
-			);
+			throw new \WS\TatooSoapFault(\WS\TatooSoapFault::ALREADYEXISTS, 'already existing');
 		}
 
 		return $this->checkResponse($response);
