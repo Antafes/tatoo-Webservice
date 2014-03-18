@@ -43,9 +43,16 @@ class ConfigurationOutputHandler
 	 *
 	 * @param string $key
 	 * @return string
+	 * @throws \WS\TatooSoapFault
 	 */
 	public function getValue($key)
 	{
+		if (!array_key_exists($key, $this->configurations))
+			throw new \WS\TatooSoapFault(
+				\WS\TatooSoapFault::MISSINGCONFIGURATION,
+				'Could not find configuration for key "' . $key . '".'
+			);
+
 		return $this->configurations[$key];
 	}
 }

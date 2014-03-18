@@ -29,11 +29,11 @@ class SOAPHandler
 	 *
 	 * @return string
 	 */
-	public function getTatooVersion()
+	public function getTatooConfiguration($configuration)
 	{
 		$configurations = new \WS\configurationOutputHandler();
 
-		return $configurations->getValue('tatooVersion');
+		return $configurations->getValue($configuration);
 	}
 
 	/**
