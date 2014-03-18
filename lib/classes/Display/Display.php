@@ -23,6 +23,9 @@ class Display
 
 		// Create the page itself
 		$class = '\\Display\\Page\\'.$pageName;
+		if (!class_exists($class))
+			$class = '\\Display\\Page\\Index';
+
 		$page = new $class();
 
 		if ($page->getTemplate())
